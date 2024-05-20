@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Your custom styles here */
+      .background-radial-gradient {
+        background-color: #d9d9d9c8;
+      }
+
+      .bg-glass {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: saturate(200%) blur(25px);
+      }
+      .form-placeholder ::placeholder {
+        color: #fff8f8; /* Light grey color for form labels */
+      }
+
+      .form-control {
+        background-color: #f8f9fa; /* Light grey background for form controls */
+        color: #000; /* Black color for form controls */
+      }
+      .btn-success {
+        padding: 0.75rem 2rem; /* Reduced button padding */
+        font-size: 0.9rem; /* Reduced button font size */
+        background-color: #03b82e; /* Green color for primary button */
+        border-color: #07b830; /* Green color for button border */
+      }
+      .btn-success:hover {
+        background-color: #030503; /* Darker green color on button hover */
+        border-color: #000000; /* Darker green color on button border hover */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Section: Design Block -->
+    <section class="background-radial-gradient overflow-hidden">
+      <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+          <div
+            class="col-lg-6 mb-5 mb-lg-0"
+            style="z-index: 10; position: relative"
+          >
+            <img
+              src="./img/product-1.png"
+              style="max-width: 90%; height: auto"
+            />
+          </div>
+
+          <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+            <div
+              id="radius-shape-1"
+              class="position-absolute rounded-circle shadow-5-strong"
+            ></div>
+            <div
+              id="radius-shape-2"
+              class="position-absolute shadow-5-strong"
+            ></div>
+
+            <div class="card bg-glass">
+              <div class="card-body px-4 py-5 px-md-5">
+                <form action="/signup" method="post">
+                  <!-- Form fields go here -->
+                  <div class="row">
+                    <h2 class="text-center mb-4">Sign up</h2>
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input
+                          type="text"
+                          id="form1Example1"
+                          name="FirstName"
+                          class="form-control form-placeholder"
+                          placeholder="First Name"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input
+                          type="text"
+                          id="form2Example2"
+                          name="LastName"
+                          class="form-control form-placeholder"
+                          placeholder="Last Name"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input
+                      type="email"
+                      id="form3Example3"
+                      name="email"
+                      class="form-control form-placeholder"
+                      placeholder="Email Address"
+                    />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input
+                      type="phone"
+                      id="form4Example4"
+                      name="phone"
+                      class="form-control form-placeholder"
+                      placeholder="Phone Number"
+                    />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input
+                      type="password"
+                      id="form5Example5"
+                      name="password"
+                      class="form-control form-placeholder"
+                      placeholder="Password"
+                    />
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-center align-items-center vh-1"
+                  >
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-block mb-4 text-center"
+                    >
+                      Sign up
+                    </button>
+                  </div>
+
+                  <!-- Flash message -->
+                  <% if (messages.error) { %>
+                  <div
+                    class="alert alert-danger text-center"
+                    role="alert"
+                    style="background-color: #dc3535; color: #ffffff"
+                  >
+                    <%= messages.error %>
+                  </div>
+                  <% } %>
+
+                  <div
+                    class="d-flex justify-content-center align-items-center vh-1"
+                  >
+                    <footer class="text-center">
+                      Already have an Account?
+                      <a href="/login">Log in</a>
+                    </footer>
+                  </div>
+
+                  <div class="text-center">
+                    <p>or sign up with:</p>
+                    <a
+                      href="/auth/google"
+                      class="btn btn-link btn-floating mx-1"
+                    >
+                      <img
+                        src="../img/search.png"
+                        alt="Google"
+                        style="width: 34px; height: 34px"
+                      />
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const email = document.getElementById("form3Example3").value;
+
+      // Make a POST request to the server
+      fetch("/signup_Otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => {
+          // Handle the response from the server if needed
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
+  </body>
+</html>
